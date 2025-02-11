@@ -14,60 +14,6 @@ namespace ExcelMerge.GUI.ViewModels
 {
     public class DiffViewModel : BindableBase
     {
-        private ObservableCollection<string> srcExcelFiles;
-        public ObservableCollection<string> SrcExcelFiles
-        {
-            get => srcExcelFiles;
-            set => SetProperty(ref srcExcelFiles, value);
-        }
-
-        private ObservableCollection<string> dstExcelFiles;
-        public ObservableCollection<string> DstExcelFiles
-        {
-            get => dstExcelFiles;
-            set => SetProperty(ref dstExcelFiles, value);
-        }
-
-        private string srcFolderPath;
-        public string SrcFolderPath
-        {
-            get => srcFolderPath;
-            set => SetProperty(ref srcFolderPath, value);
-        }
-
-        private string dstFolderPath;
-        public string DstFolderPath
-        {
-            get => dstFolderPath;
-            set => SetProperty(ref dstFolderPath, value);
-        }
-
-        public void LoadSrcExcelFiles(string folderPath)
-        {
-            SrcExcelFiles.Clear();
-            var files = Directory.GetFiles(folderPath, "*.xls")
-                .Concat(Directory.GetFiles(folderPath, "*.xlsx"))
-                .Concat(Directory.GetFiles(folderPath, "*.csv"))
-                .Concat(Directory.GetFiles(folderPath, "*.tsv"));
-            foreach (var file in files)
-            {
-                SrcExcelFiles.Add(file);
-            }
-        }
-
-        public void LoadDstExcelFiles(string folderPath)
-        {
-            DstExcelFiles.Clear();
-            var files = Directory.GetFiles(folderPath, "*.xls")
-                .Concat(Directory.GetFiles(folderPath, "*.xlsx"))
-                .Concat(Directory.GetFiles(folderPath, "*.csv"))
-                .Concat(Directory.GetFiles(folderPath, "*.tsv"));
-            foreach (var file in files)
-            {
-                DstExcelFiles.Add(file);
-            }
-        }
-
         private bool showLocationGridLine;
         public bool ShowLocationGridLine
         {
@@ -171,8 +117,6 @@ namespace ExcelMerge.GUI.ViewModels
 
         public DiffViewModel()
         {
-            SrcExcelFiles = new ObservableCollection<string>();
-            DstExcelFiles = new ObservableCollection<string>();
             Description = new DragAcceptDescription();
             Description.DragDrop += DragDrop;
             Description.DragDrop += DragOver;

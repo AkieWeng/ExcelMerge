@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <vc:FileExistenceMultiConverter x:Key="FileExistenceMultiConverter"/>
+        <vc:FileMatchToColorConverter x:Key="FileMatchToColorConverter"/>
         <vc:FilePathToFileNameConverter x:Key="FilePathToFileNameConverter"/>
         <CollectionViewSource x:Key="SrcFilesViewSource" Source="{Binding SrcExcelFiles}" />
         <CollectionViewSource x:Key="DstFilesViewSource" Source="{Binding DstExcelFiles}" />
@@ -30,49 +30,38 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,10,10,0" Orientation="Horizontal">
 
             <Button x:Name="SrcFolderButton" Content="选择源文件夹" Margin="10"  Height="30" Padding="5,5" Width="100" Click="SrcFolderButton_Click"/>
-            <TextBox Text="{Binding SrcFolderPath}" Margin="5" VerticalAlignment="Center" Height="30" Padding="5" FontSize="16" Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType=Window}, Converter={vc:PercentageConverter}, ConverterParameter='0.20'}"/>
+            <TextBox Text="{Binding SrcFolderPath}" Margin="5" VerticalAlignment="Center" Height="30" Padding="3" FontSize="16" Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType=Window}, Converter={vc:PercentageConverter}, ConverterParameter='0.30'}"/>
             <Button x:Name="DstFolderButton" Content="选择目标文件夹" Margin="10" Height="30" Padding="5,5" Width="100" Click="DstFolderButton_Click"/>
-            <TextBox Text="{Binding DstFolderPath}" Margin="5" VerticalAlignment="Center" Height="30" Padding="5" FontSize="16" Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType=Window}, Converter={vc:PercentageConverter}, ConverterParameter='0.20'}"/>
-            <Button x:Name="FolderDiffButton" Content="提取差异" Margin="10" Height="30" Padding="5,5" Width="100"/>
+            <TextBox Text="{Binding DstFolderPath}" Margin="5" VerticalAlignment="Center" Height="30" Padding="3" FontSize="16" Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType=Window}, Converter={vc:PercentageConverter}, ConverterParameter='0.30'}"/>
 
         </StackPanel>
 
-        <ListBox Grid.Row="1" Grid.Column="0" Margin="10" ItemsSource="{Binding Source={StaticResource SrcFilesViewSource}}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock>
-                        <TextBlock.Text>
-                            <Binding Converter="{StaticResource FilePathToFileNameConverter}"/>
-                        </TextBlock.Text>
-                        <TextBlock.Foreground>
-                            <MultiBinding Converter="{StaticResource FileExistenceMultiConverter}">
-                                <Binding Path="." />
-                                <Binding Path="DataContext.DstExcelFiles" RelativeSource="{RelativeSource AncestorType=UserControl}" />
-                            </MultiBinding>
-                        </TextBlock.Foreground>
-                    </TextBlock>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
 
-        <ListBox Grid.Row="1" Grid.Column="2" Margin="10" ItemsSource="{Binding Source={StaticResource DstFilesViewSource}}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock>
-                        <TextBlock.Text>
-                            <Binding Converter="{StaticResource FilePathToFileNameConverter}"/>
-                        </TextBlock.Text>
-                        <TextBlock.Foreground>
-                            <MultiBinding Converter="{StaticResource FileExistenceMultiConverter}">
-                                <Binding Path="." />
-                                <Binding Path="DataContext.SrcExcelFiles" RelativeSource="{RelativeSource AncestorType=UserControl}" />
-                            </MultiBinding>
-                        </TextBlock.Foreground>
-                    </TextBlock>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            <ScrollViewer x:Name="SrcScrollViewer" Grid.Column="0" Margin="10" VerticalScrollBarVisibility="Auto" ScrollChanged="SrcScrollViewer_ScrollChanged">
+                <ListBox ItemsSource="{Binding AlignedFiles}"  SelectionChanged="ListBox_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding SrcFile}" Foreground="{Binding IsMatched, Converter={StaticResource FileMatchToColorConverter}}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
 
+            <ScrollViewer x:Name="DstScrollViewer" Grid.Column="1" Margin="10" VerticalScrollBarVisibility="Auto" ScrollChanged="DstScrollViewer_ScrollChanged">
+                <ListBox ItemsSource="{Binding AlignedFiles}"  SelectionChanged="ListBox_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DstFile}"  Foreground="{Binding IsMatched, Converter={StaticResource FileMatchToColorConverter}}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+        </Grid>
 
     </Grid>
 </UserControl>

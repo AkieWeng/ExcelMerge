@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static ExcelMerge.GUI.ViewModels.FolderViewModel;
 
 namespace ExcelMerge.GUI.Views
 {
@@ -26,9 +27,35 @@ namespace ExcelMerge.GUI.Views
             InitializeComponent();
         }
 
-        private DiffViewModel GetViewModel()
+        private FolderViewModel GetViewModel()
         {
-            return DataContext as DiffViewModel;
+            return DataContext as FolderViewModel;
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //if (e.AddedItems.Count > 0)
+            //{
+            //    var selectedItem = e.AddedItems[0] as AlignedFile; 
+            //    if (selectedItem != null)
+            //    {
+            //        var diffView = new DiffView();
+            //        var diffViewModel = diffView.DataContext as DiffViewModel; 
+
+            //        if (diffViewModel != null)
+            //        {
+            //            diffViewModel.SrcPath = selectedItem.SrcFile;
+            //            diffViewModel.DstPath = selectedItem.DstFile;
+            //        }
+
+            //        // 导航到 DiffView 页面
+            //        var parentWindow = Window.GetWindow(this) as MainWindow; // 假设 MainWindow 是你的主窗口
+            //        if (parentWindow != null)
+            //        {
+            //            parentWindow.MainFrame.Navigate(diffView); // 假设 MainFrame 是主窗口中的 Frame 控件
+            //        }
+            //    }
+            //}
         }
 
         //private void ExcelFileListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -56,8 +83,9 @@ namespace ExcelMerge.GUI.Views
                 GetViewModel().SrcFolderPath = folderPath;
                 // 加载源文件夹中的 Excel 文件
                 GetViewModel().LoadSrcExcelFiles(folderPath);
-                var viewSource = (CollectionViewSource)FindResource("DstFilesViewSource");
-                viewSource.View.Refresh();
+                //var viewSource = (CollectionViewSource)FindResource("DstFilesViewSource");
+                //viewSource.View.Refresh();
+                GetViewModel().AlignFiles();
             }
         }
 
@@ -71,10 +99,28 @@ namespace ExcelMerge.GUI.Views
                 GetViewModel().DstFolderPath = folderPath;
                 // 加载目标文件夹中的 Excel 文件
                 GetViewModel().LoadDstExcelFiles(folderPath);
-                var viewSource = (CollectionViewSource)FindResource("SrcFilesViewSource");
-                viewSource.View.Refresh();
+                //var viewSource = (CollectionViewSource)FindResource("SrcFilesViewSource");
+                //viewSource.View.Refresh();
+                GetViewModel().AlignFiles();
             }
         }
+
+        private void SrcScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (e.VerticalChange != 0)
+            {
+                DstScrollViewer.ScrollToVerticalOffset(e.VerticalOffset);
+            }
+        }
+
+        private void DstScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (e.VerticalChange != 0)
+            {
+                SrcScrollViewer.ScrollToVerticalOffset(e.VerticalOffset);
+            }
+        }
+
 
     }
 }
