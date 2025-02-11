@@ -141,7 +141,6 @@
     <Compile Include="Shell\PowerShellHost.cs" />
     <Compile Include="Shell\PowerShellInvocation.cs" />
     <Compile Include="ValueConverters\FileMatchToColorConverter.cs" />
-    <Compile Include="ValueConverters\FilePathToFileNameConverter.cs" />
     <Compile Include="ViewModels\FolderViewModel.cs" />
     <Compile Include="ViewModels\SettingCollectionWindowViewModelBase.cs" />
     <Compile Include="ViewModels\SettingEditorWindowViewModelBase.cs" />

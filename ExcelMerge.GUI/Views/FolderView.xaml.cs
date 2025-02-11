@@ -49,6 +49,8 @@ namespace ExcelMerge.GUI.Views
                         var mainWindowViewModel = parentWindow.DataContext as MainWindowViewModel;
                         if (mainWindowViewModel != null)
                         {
+                            mainWindowViewModel.SrcPath = GetViewModel().SrcFolderPath;
+                            mainWindowViewModel.DstPath = GetViewModel().DstFolderPath;
                             var diffView = new DiffView();
                             var diffViewModel = new DiffViewModel(srcFilePath, dstFilePath);
                             diffView.DataContext = diffViewModel;
@@ -59,21 +61,6 @@ namespace ExcelMerge.GUI.Views
             }
         }
 
-        //private void ExcelFileListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        //{
-        //    if (ExcelFileListBox.SelectedItem != null)
-        //    {
-        //        string selectedFile = ExcelFileListBox.SelectedItem.ToString();
-        //        // 按照原来的逻辑进行表格的差异比较
-        //        CompareExcelFiles(selectedFile);
-        //    }
-        //}
-
-        //private void CompareExcelFiles(string filePath)
-        //{
-        //    // 实现表格差异比较的逻辑
-        //}
-
         private void SrcFolderButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new System.Windows.Forms.FolderBrowserDialog();
@@ -82,11 +69,6 @@ namespace ExcelMerge.GUI.Views
                 string folderPath = dialog.SelectedPath;
                 // 更新源文件夹路径
                 GetViewModel().SrcFolderPath = folderPath;
-                // 加载源文件夹中的 Excel 文件
-                GetViewModel().LoadSrcExcelFiles(folderPath);
-                //var viewSource = (CollectionViewSource)FindResource("DstFilesViewSource");
-                //viewSource.View.Refresh();
-                GetViewModel().AlignFiles();
             }
         }
 
@@ -98,11 +80,6 @@ namespace ExcelMerge.GUI.Views
                 string folderPath = dialog.SelectedPath;
                 // 更新目标文件夹路径
                 GetViewModel().DstFolderPath = folderPath;
-                // 加载目标文件夹中的 Excel 文件
-                GetViewModel().LoadDstExcelFiles(folderPath);
-                //var viewSource = (CollectionViewSource)FindResource("SrcFilesViewSource");
-                //viewSource.View.Refresh();
-                GetViewModel().AlignFiles();
             }
         }
 

@@ -45,14 +45,31 @@ namespace ExcelMerge.GUI.ViewModels
         public string SrcFolderPath
         {
             get => srcFolderPath;
-            set => SetProperty(ref srcFolderPath, value);
+            set
+            {
+                if (srcFolderPath != value)
+                {
+                    srcFolderPath = value;
+                    // 加载源文件夹中的 Excel 文件
+                    LoadSrcExcelFiles(srcFolderPath);
+                    AlignFiles();
+                }
+            }
         }
 
         private string dstFolderPath;
         public string DstFolderPath
         {
-            get => dstFolderPath;
-            set => SetProperty(ref dstFolderPath, value);
+            get => dstFolderPath; set
+            {
+                if (dstFolderPath != value)
+                {
+                    dstFolderPath = value;
+                    // 加载目标文件夹中的 Excel 文件
+                    LoadDstExcelFiles(dstFolderPath);
+                    AlignFiles();
+                }
+            }
         }
 
         public void LoadSrcExcelFiles(string folderPath)
@@ -101,6 +118,12 @@ namespace ExcelMerge.GUI.ViewModels
             SrcExcelFiles = new ObservableCollection<string>();
             DstExcelFiles = new ObservableCollection<string>();
             AlignedFiles = new ObservableCollection<AlignedFile>();
+        }
+
+        public FolderViewModel(string srcFolderPath, string dstFolderPath) : this()
+        {
+            SrcFolderPath = srcFolderPath;
+            DstFolderPath = dstFolderPath;
         }
     }
 }

@@ -360,6 +360,22 @@ namespace ExcelMerge.GUI.Views
             ExecuteDiff();
         }
 
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            var parentWindow = Window.GetWindow(this) as MainWindow;
+            if (parentWindow != null)
+            {
+                var mainWindowViewModel = parentWindow.DataContext as MainWindowViewModel;
+                if (mainWindowViewModel != null)
+                {
+                    var folderView = new FolderView();
+                    var folderViewModel = new FolderViewModel(mainWindowViewModel.SrcPath, mainWindowViewModel.DstPath);
+                    folderView.DataContext = folderViewModel;
+                    mainWindowViewModel.Content = folderView;
+                }
+            }
+        } 
+
         private ExcelSheetReadConfig CreateReadConfig()
         {
             var setting = ((App)Application.Current).Setting;

@@ -61,6 +61,15 @@ namespace ExcelMerge.GUI.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Back 的本地化字符串。
+        /// </summary>
+        public static string Button_BackFolder {
+            get {
+                return ResourceManager.GetString("Button_BackFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Extract Diff 的本地化字符串。
         /// </summary>
         public static string Button_ExtractDiff {
@@ -471,6 +480,15 @@ namespace ExcelMerge.GUI.Properties {
         public static string Label_RowHeaderColor {
             get {
                 return ResourceManager.GetString("Label_RowHeaderColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似  的本地化字符串。
+        /// </summary>
+        public static string Label_RowHeight {
+            get {
+                return ResourceManager.GetString("Label_RowHeight", resourceCulture);
             }
         }
         

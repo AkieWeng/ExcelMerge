@@ -37,6 +37,10 @@
             <Expander.Header>
                 <WrapPanel Orientation="Horizontal" Margin="3">
 
+                    <Button x:Name="BackButton" Content="{x:Static props:Resources.Button_BackFolder}" 
+                           Margin="3" Height="40" Padding="5,5"
+                           Click="BackButton_Click"/>
+
                     <Button x:Name="DiffButton" Content="{x:Static props:Resources.Button_ExtractDiff}" 
                   Margin="10,0,0,0" Height="40" Padding="5,5"
                   Click="DiffButton_Click"

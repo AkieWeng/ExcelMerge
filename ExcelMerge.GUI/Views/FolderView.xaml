@@ -9,9 +9,6 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <vc:FileMatchToColorConverter x:Key="FileMatchToColorConverter"/>
-        <vc:FilePathToFileNameConverter x:Key="FilePathToFileNameConverter"/>
-        <CollectionViewSource x:Key="SrcFilesViewSource" Source="{Binding SrcExcelFiles}" />
-        <CollectionViewSource x:Key="DstFilesViewSource" Source="{Binding DstExcelFiles}" />
     </UserControl.Resources>
 
 

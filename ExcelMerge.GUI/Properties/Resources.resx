@@ -497,4 +497,10 @@ If you don't want to apply file settings, enable "Ignore File Setting".</value>
   <data name="ContextMenu_CopyAsTsv" xml:space="preserve">
     <value>Copy as TSV</value>
   </data>
+  <data name="Label_RowHeight" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Button_BackFolder" xml:space="preserve">
+    <value>Back</value>
+  </data>
 </root>
