@@ -83,6 +83,7 @@
       <HintPath>..\packages\System.Management.Automation.6.1.7601.17515\lib\net45\System.Management.Automation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Wpf.6.3.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -139,9 +140,14 @@
     <Compile Include="Settings\SettingCollection.cs" />
     <Compile Include="Shell\PowerShellHost.cs" />
     <Compile Include="Shell\PowerShellInvocation.cs" />
+    <Compile Include="ValueConverters\FileExistenceMultiConverter.cs" />
+    <Compile Include="ValueConverters\FilePathToFileNameConverter.cs" />
     <Compile Include="ViewModels\SettingCollectionWindowViewModelBase.cs" />
     <Compile Include="ViewModels\SettingEditorWindowViewModelBase.cs" />
     <Compile Include="Views\DiffViewEvent\DiffViewEventArgs.cs" />
+    <Compile Include="Views\FolderView.xaml.cs">
+      <DependentUpon>FolderView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProgressWindow.xaml.cs">
       <DependentUpon>ProgressWindow.xaml</DependentUpon>
     </Compile>
@@ -211,6 +217,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FileSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FolderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

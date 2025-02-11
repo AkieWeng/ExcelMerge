@@ -23,10 +23,12 @@ namespace ExcelMerge.GUI.Commands
         {
             var window = new MainWindow();
             var diffView = new DiffView();
-            var windowViewModel = new MainWindowViewModel(diffView);
+            var folderView = new FolderView();
+            var windowViewModel = new MainWindowViewModel(folderView);
             var diffViewModel = new DiffViewModel(Option.SrcPath, Option.DstPath, windowViewModel);
             window.DataContext = windowViewModel;
             diffView.DataContext = diffViewModel;
+            folderView.DataContext = diffViewModel;
 
             App.Current.MainWindow = window;
             window.Show();
