@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static ExcelMerge.GUI.ViewModels.FolderViewModel;
 using System.IO;
+using System.ComponentModel;
 
 namespace ExcelMerge.GUI.Views
 {
@@ -51,9 +52,26 @@ namespace ExcelMerge.GUI.Views
                         {
                             mainWindowViewModel.SrcPath = GetViewModel().SrcFolderPath;
                             mainWindowViewModel.DstPath = GetViewModel().DstFolderPath;
-                            var diffView = new DiffView();
-                            var diffViewModel = new DiffViewModel(srcFilePath, dstFilePath);
-                            diffView.DataContext = diffViewModel;
+                            DiffView diffView;
+                            if(mainWindowViewModel.DiffView == null)
+                                diffView = new DiffView();
+                            else
+                                diffView = mainWindowViewModel.DiffView;
+                            if (diffView.DataContext == null)
+                            {
+                                var diffViewModel = new DiffViewModel(srcFilePath, dstFilePath);
+                                diffView.DataContext = diffViewModel;
+                            }
+                            else
+                            {
+                                var diffViewModel = diffView.DataContext as DiffViewModel;
+                                if (diffViewModel != null)
+                                {
+                                    diffViewModel.SrcPath = srcFilePath;
+                                    diffViewModel.DstPath = dstFilePath;
+                                }
+                            }
+                            mainWindowViewModel.DiffView = diffView;
                             mainWindowViewModel.Content = diffView;
                         }
                     }

@@ -20,6 +20,20 @@ namespace ExcelMerge.GUI.ViewModels
             set { SetProperty(ref content, value); }
         }
 
+        private FolderView folderView;
+        public FolderView FolderView
+        {
+            get { return folderView; }
+            set { SetProperty(ref folderView, value); }
+        }
+
+        private DiffView diffView;
+        public DiffView DiffView
+        {
+            get { return diffView; }
+            set { SetProperty(ref diffView, value); }
+        }
+
         private List<ExternalCommand> externalCommands;
         public List<ExternalCommand> ExternalCommands
         {

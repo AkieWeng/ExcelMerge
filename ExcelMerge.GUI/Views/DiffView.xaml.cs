@@ -368,9 +368,26 @@ namespace ExcelMerge.GUI.Views
                 var mainWindowViewModel = parentWindow.DataContext as MainWindowViewModel;
                 if (mainWindowViewModel != null)
                 {
-                    var folderView = new FolderView();
-                    var folderViewModel = new FolderViewModel(mainWindowViewModel.SrcPath, mainWindowViewModel.DstPath);
-                    folderView.DataContext = folderViewModel;
+                    FolderView folderView;
+                    if(mainWindowViewModel.FolderView == null)
+                        folderView = new FolderView();
+                    else
+                        folderView = mainWindowViewModel.FolderView;
+                    if(folderView.DataContext == null)
+                    {
+                        var folderViewModel = new FolderViewModel(mainWindowViewModel.SrcPath, mainWindowViewModel.DstPath);
+                        folderView.DataContext = folderViewModel;
+                    }
+                    else
+                    {
+                        var folderViewModel = folderView.DataContext as FolderViewModel;
+                        if(folderViewModel != null)
+                        {
+                            folderViewModel.SrcFolderPath = mainWindowViewModel.SrcPath;
+                            folderViewModel.DstFolderPath = mainWindowViewModel.DstPath;
+                        }
+                    }
+                    mainWindowViewModel.FolderView = folderView;
                     mainWindowViewModel.Content = folderView;
                 }
             }

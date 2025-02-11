@@ -9,6 +9,7 @@ using FastWpfGrid;
 using ExcelMerge.GUI.Settings;
 using ExcelMerge.GUI.Behaviors;
 using System.ComponentModel;
+using System.Security.Cryptography;
 
 namespace ExcelMerge.GUI.ViewModels
 {
@@ -32,6 +33,7 @@ namespace ExcelMerge.GUI.ViewModels
             public string SrcFile { get; set; }
             public string DstFile { get; set; }
             public bool IsMatched { get; set; }
+            public bool IsSame { get; set; }
         }
 
         private ObservableCollection<AlignedFile> alignedFiles;
@@ -53,6 +55,7 @@ namespace ExcelMerge.GUI.ViewModels
                     // 加载源文件夹中的 Excel 文件
                     LoadSrcExcelFiles(srcFolderPath);
                     AlignFiles();
+                    OnPropertyChanged(nameof(SrcFolderPath));
                 }
             }
         }
@@ -60,7 +63,8 @@ namespace ExcelMerge.GUI.ViewModels
         private string dstFolderPath;
         public string DstFolderPath
         {
-            get => dstFolderPath; set
+            get => dstFolderPath; 
+            set
             {
                 if (dstFolderPath != value)
                 {
@@ -68,6 +72,7 @@ namespace ExcelMerge.GUI.ViewModels
                     // 加载目标文件夹中的 Excel 文件
                     LoadDstExcelFiles(dstFolderPath);
                     AlignFiles();
+                    OnPropertyChanged(nameof(DstFolderPath));
                 }
             }
         }
@@ -97,6 +102,19 @@ namespace ExcelMerge.GUI.ViewModels
                 DstExcelFiles.Add(file);
             }
         }
+
+        public string ComputeHash(string filePath)
+        {            
+            using(var stream = File.OpenRead(filePath))
+            {
+                using (SHA256 hash = SHA256.Create())
+                {
+                    byte[] bytes = hash.ComputeHash(stream);
+                    return BitConverter.ToString(bytes).Replace("-", "").ToLower();
+                }
+            }
+
+        }
         public void AlignFiles()
         {
             var srcFiles = SrcExcelFiles.Select(f => System.IO.Path.GetFileName(f)).ToList();
@@ -109,7 +127,18 @@ namespace ExcelMerge.GUI.ViewModels
             {
                 var srcFile = srcFiles.Contains(file) ? file : null;
                 var dstFile = dstFiles.Contains(file) ? file : null;
-                AlignedFiles.Add(new AlignedFile { SrcFile = srcFile, DstFile = dstFile, IsMatched = srcFile == dstFile });
+                if(srcFile != dstFile)
+                    AlignedFiles.Add(new AlignedFile { SrcFile = srcFile, DstFile = dstFile, IsMatched = false, IsSame = false});
+                else
+                {
+                    // 相同文件名，判断是否相同
+                    var srcPath = System.IO.Path.Combine(SrcFolderPath, file);
+                    var dstPath = System.IO.Path.Combine(DstFolderPath, file);
+                    var srcHash = ComputeHash(srcPath);
+                    var dstHash = ComputeHash(dstPath);
+                    AlignedFiles.Add(new AlignedFile { SrcFile = file, DstFile = file, IsMatched = true, IsSame = srcHash == dstHash });
+                }
+
             }
         }
 
