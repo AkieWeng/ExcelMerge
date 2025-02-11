@@ -17,7 +17,7 @@ namespace ExcelMerge.GUI.ViewModels
         public ContentControl Content
         {
             get { return content; }
-            private set { SetProperty(ref content, value); }
+            set { SetProperty(ref content, value); }
         }
 
         private List<ExternalCommand> externalCommands;

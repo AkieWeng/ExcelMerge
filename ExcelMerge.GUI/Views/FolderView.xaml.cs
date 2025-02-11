@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static ExcelMerge.GUI.ViewModels.FolderViewModel;
+using System.IO;
 
 namespace ExcelMerge.GUI.Views
 {
@@ -32,30 +33,30 @@ namespace ExcelMerge.GUI.Views
             return DataContext as FolderViewModel;
         }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            //if (e.AddedItems.Count > 0)
-            //{
-            //    var selectedItem = e.AddedItems[0] as AlignedFile; 
-            //    if (selectedItem != null)
-            //    {
-            //        var diffView = new DiffView();
-            //        var diffViewModel = diffView.DataContext as DiffViewModel; 
-
-            //        if (diffViewModel != null)
-            //        {
-            //            diffViewModel.SrcPath = selectedItem.SrcFile;
-            //            diffViewModel.DstPath = selectedItem.DstFile;
-            //        }
-
-            //        // 导航到 DiffView 页面
-            //        var parentWindow = Window.GetWindow(this) as MainWindow; // 假设 MainWindow 是你的主窗口
-            //        if (parentWindow != null)
-            //        {
-            //            parentWindow.MainFrame.Navigate(diffView); // 假设 MainFrame 是主窗口中的 Frame 控件
-            //        }
-            //    }
-            //}
+            var listBox = sender as ListBox;
+            if (listBox != null && listBox.SelectedItem != null)
+            {
+                var selectedItem = listBox.SelectedItem as FolderViewModel.AlignedFile;
+                if (selectedItem != null && selectedItem.IsMatched)
+                {
+                    string srcFilePath = System.IO.Path.Combine(GetViewModel().SrcFolderPath, selectedItem.SrcFile);
+                    string dstFilePath = System.IO.Path.Combine(GetViewModel().DstFolderPath, selectedItem.DstFile);
+                    var parentWindow = Window.GetWindow(this) as MainWindow;
+                    if (parentWindow != null)
+                    {
+                        var mainWindowViewModel = parentWindow.DataContext as MainWindowViewModel;
+                        if (mainWindowViewModel != null)
+                        {
+                            var diffView = new DiffView();
+                            var diffViewModel = new DiffViewModel(srcFilePath, dstFilePath);
+                            diffView.DataContext = diffViewModel;
+                            mainWindowViewModel.Content = diffView;
+                        }
+                    }
+                }
+            }
         }
 
         //private void ExcelFileListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)

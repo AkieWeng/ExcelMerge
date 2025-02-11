@@ -43,7 +43,7 @@
             </Grid.ColumnDefinitions>
 
             <ScrollViewer x:Name="SrcScrollViewer" Grid.Column="0" Margin="10" VerticalScrollBarVisibility="Auto" ScrollChanged="SrcScrollViewer_ScrollChanged">
-                <ListBox ItemsSource="{Binding AlignedFiles}"  SelectionChanged="ListBox_SelectionChanged">
+                <ListBox ItemsSource="{Binding AlignedFiles}"  MouseDoubleClick="ListBox_MouseDoubleClick">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding SrcFile}" Foreground="{Binding IsMatched, Converter={StaticResource FileMatchToColorConverter}}"/>
@@ -53,7 +53,7 @@
             </ScrollViewer>
 
             <ScrollViewer x:Name="DstScrollViewer" Grid.Column="1" Margin="10" VerticalScrollBarVisibility="Auto" ScrollChanged="DstScrollViewer_ScrollChanged">
-                <ListBox ItemsSource="{Binding AlignedFiles}"  SelectionChanged="ListBox_SelectionChanged">
+                <ListBox ItemsSource="{Binding AlignedFiles}"  MouseDoubleClick="ListBox_MouseDoubleClick">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding DstFile}"  Foreground="{Binding IsMatched, Converter={StaticResource FileMatchToColorConverter}}"/>

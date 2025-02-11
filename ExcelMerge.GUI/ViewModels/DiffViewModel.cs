@@ -124,6 +124,11 @@ namespace ExcelMerge.GUI.ViewModels
             SrcPath = string.Empty;
             DstPath = string.Empty;
         }
+        public DiffViewModel(string src, string dst) : this()
+        {
+            SrcPath = src;
+            DstPath = dst;
+        }
 
         public DiffViewModel(string src, string dst, MainWindowViewModel mwv) : this()
         {
