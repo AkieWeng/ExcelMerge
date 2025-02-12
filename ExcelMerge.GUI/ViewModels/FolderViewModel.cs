@@ -15,18 +15,18 @@ namespace ExcelMerge.GUI.ViewModels
 {
     public class FolderViewModel : BindableBase
     {
-        private ObservableCollection<string> srcExcelFiles;
-        public ObservableCollection<string> SrcExcelFiles
+        private ObservableCollection<string> srcFiles;
+        public ObservableCollection<string> SrcFiles
         {
-            get => srcExcelFiles;
-            set => SetProperty(ref srcExcelFiles, value);
+            get => srcFiles;
+            set => SetProperty(ref srcFiles, value);
         }
 
-        private ObservableCollection<string> dstExcelFiles;
-        public ObservableCollection<string> DstExcelFiles
+        private ObservableCollection<string> dstFiles;
+        public ObservableCollection<string> DstFiles
         {
-            get => dstExcelFiles;
-            set => SetProperty(ref dstExcelFiles, value);
+            get => dstFiles;
+            set => SetProperty(ref dstFiles, value);
         }
         public class AlignedFile
         {
@@ -73,37 +73,53 @@ namespace ExcelMerge.GUI.ViewModels
 
         public void LoadSrcExcelFiles(string folderPath)
         {
-            SrcExcelFiles.Clear();
+            SrcFiles.Clear();
             var files = Directory.GetFiles(folderPath, "*.xls")
                 .Concat(Directory.GetFiles(folderPath, "*.xlsx"))
                 .Concat(Directory.GetFiles(folderPath, "*.csv"))
                 .Concat(Directory.GetFiles(folderPath, "*.tsv"));
-            if (!files.Any())
+            var directories = Directory.GetDirectories(folderPath);
+
+            if (!files.Any() && !directories.Any())
             {
-                MessageBox.Show("源文件夹中没有找到相关文件。", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("源文件夹中没有找到相关文件或子文件夹。", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
+
             foreach (var file in files)
             {
-                SrcExcelFiles.Add(file);
+                SrcFiles.Add(file);
+            }
+
+            foreach (var directory in directories)
+            {
+                SrcFiles.Add(directory);
             }
         }
 
         public void LoadDstExcelFiles(string folderPath)
         {
-            DstExcelFiles.Clear();
+            DstFiles.Clear();
             var files = Directory.GetFiles(folderPath, "*.xls")
                 .Concat(Directory.GetFiles(folderPath, "*.xlsx"))
                 .Concat(Directory.GetFiles(folderPath, "*.csv"))
                 .Concat(Directory.GetFiles(folderPath, "*.tsv"));
-            if (!files.Any())
+            var directories = Directory.GetDirectories(folderPath);
+
+            if (!files.Any() && !directories.Any())
             {
-                MessageBox.Show("目标文件夹中没有找到相关文件。", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("目标文件夹中没有找到相关文件或子文件夹。", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
+
             foreach (var file in files)
             {
-                DstExcelFiles.Add(file);
+                DstFiles.Add(file);
+            }
+
+            foreach (var directory in directories)
+            {
+                DstFiles.Add(directory);
             }
         }
 
@@ -121,26 +137,40 @@ namespace ExcelMerge.GUI.ViewModels
         }
         public void AlignFiles()
         {
-            var srcFiles = SrcExcelFiles.Select(f => System.IO.Path.GetFileName(f)).ToList();
-            var dstFiles = DstExcelFiles.Select(f => System.IO.Path.GetFileName(f)).ToList();
+            var srcFileNames = SrcFiles.Select(f => System.IO.Path.GetFileName(f)).ToList();
+            var dstFileNames = DstFiles.Select(f => System.IO.Path.GetFileName(f)).ToList();
 
-            var allFiles = srcFiles.Union(dstFiles).OrderBy(f => f).ToList();
+            var allFiles = srcFileNames.Union(dstFileNames).OrderBy(f => f).ToList();
 
             AlignedFiles.Clear();
             foreach (var file in allFiles)
             {
-                var srcFile = srcFiles.Contains(file) ? file : null;
-                var dstFile = dstFiles.Contains(file) ? file : null;
-                if(srcFile != dstFile)
-                    AlignedFiles.Add(new AlignedFile { SrcFile = srcFile, DstFile = dstFile, IsMatched = false, IsSame = false});
+                var srcFile = srcFileNames.Contains(file) ? file : null;
+                var dstFile = dstFileNames.Contains(file) ? file : null;
+                if (srcFile != dstFile)
+                    AlignedFiles.Add(new AlignedFile { SrcFile = srcFile, DstFile = dstFile, IsMatched = false, IsSame = false });
+                // 相同文件名
                 else
                 {
-                    // 相同文件名，判断是否相同
                     var srcPath = System.IO.Path.Combine(SrcFolderPath, file);
                     var dstPath = System.IO.Path.Combine(DstFolderPath, file);
-                    var srcHash = ComputeHash(srcPath);
-                    var dstHash = ComputeHash(dstPath);
-                    AlignedFiles.Add(new AlignedFile { SrcFile = file, DstFile = file, IsMatched = true, IsSame = srcHash == dstHash });
+                    // 都是文件夹
+                    if (Directory.Exists(srcPath) && Directory.Exists(dstPath))
+                    {
+                        AlignedFiles.Add(new AlignedFile { SrcFile = file, DstFile = file, IsMatched = true, IsSame = true });
+                    }
+                    // 一个是文件夹，一个是文件
+                    else if (Directory.Exists(srcPath) || Directory.Exists(dstPath))
+                    {
+                        AlignedFiles.Add(new AlignedFile { SrcFile = file, DstFile = file, IsMatched = true, IsSame = false });
+                    }
+                    // 都是文件
+                    else
+                    {
+                        var srcHash = ComputeHash(srcPath);
+                        var dstHash = ComputeHash(dstPath);
+                        AlignedFiles.Add(new AlignedFile { SrcFile = file, DstFile = file, IsMatched = true, IsSame = srcHash == dstHash });
+                    }
                 }
 
             }
@@ -148,8 +178,8 @@ namespace ExcelMerge.GUI.ViewModels
 
         public FolderViewModel()
         {
-            SrcExcelFiles = new ObservableCollection<string>();
-            DstExcelFiles = new ObservableCollection<string>();
+            SrcFiles = new ObservableCollection<string>();
+            DstFiles = new ObservableCollection<string>();
             AlignedFiles = new ObservableCollection<AlignedFile>();
         }
 
