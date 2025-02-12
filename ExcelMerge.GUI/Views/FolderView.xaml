@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:props="clr-namespace:ExcelMerge.GUI.Properties"
              xmlns:vc="clr-namespace:ExcelMerge.GUI.ValueConverters"
              xmlns:local="clr-namespace:ExcelMerge.GUI.Views"
              mc:Ignorable="d" 
@@ -37,11 +38,11 @@
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,10,10,0" Orientation="Horizontal">
 
-            <Button x:Name="SrcFolderButton" Content="选择源文件夹" Margin="10"  Height="30" Padding="5,5" Width="100" Click="SrcFolderButton_Click"/>
-            <Button x:Name="SrcFolderUpButton" Content="返回上级文件夹" Margin="10"  Height="30" Padding="5,5" Width="100" Click="SrcFolderUpButton_Click"/>
+            <Button x:Name="SrcFolderButton" Margin="10"  Height="30" Padding="5,5" Width="140" Click="SrcFolderButton_Click" Content="{x:Static props:Resources.Button_SelectSrcFolder}"/>
+            <Button x:Name="SrcParentFolderButton" Margin="10"  Height="30" Padding="5,5" Width="150" Click="SrcParentFolderButton_Click" Content="{x:Static props:Resources.Button_ParentFolder}"/>
             <TextBox Text="{Binding SrcFolderPath, Mode=TwoWay}" Margin="5" VerticalAlignment="Center" Height="30" Padding="3" FontSize="16" Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType=Window}, Converter={vc:PercentageConverter}, ConverterParameter='0.30'}"/>
-            <Button x:Name="DstFolderButton" Content="选择目标文件夹" Margin="10" Height="30" Padding="5,5" Width="100" Click="DstFolderButton_Click"/>
-            <Button x:Name="DstFolderUpButton" Content="返回上级文件夹" Margin="10" Height="30" Padding="5,5" Width="100" Click="DstFolderUpButton_Click"/>
+            <Button x:Name="DstFolderButton" Margin="10" Height="30" Padding="5,5" Width="140" Click="DstFolderButton_Click" Content="{x:Static props:Resources.Button_SelectDstFolder}"/>
+            <Button x:Name="DstParentFolderButton" Margin="10" Height="30" Padding="5,5" Width="150" Click="DstParentFolderButton_Click" Content="{x:Static props:Resources.Button_ParentFolder}"/>
             <TextBox Text="{Binding DstFolderPath, Mode=TwoWay}" Margin="5" VerticalAlignment="Center" Height="30" Padding="3" FontSize="16" Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType=Window}, Converter={vc:PercentageConverter}, ConverterParameter='0.30'}"/>
 
         </StackPanel>

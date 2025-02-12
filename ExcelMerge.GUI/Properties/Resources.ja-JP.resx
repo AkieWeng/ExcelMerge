@@ -225,10 +225,22 @@
   <data name="ContextMenu_DiffAsHeader" xml:space="preserve">
     <value>この行を列ヘッダとして差分を抽出する</value>
   </data>
+  <data name="ContextMenu_SetRowHeader" xml:space="preserve">
+    <value>←行ヘッダにセット</value>
+  </data>
+  <data name="ContextMenu_ResetRowHeader" xml:space="preserve">
+    <value>←行ヘッダをリセット</value>
+  </data>
+  <data name="ContextMenu_SetColumnHeader" xml:space="preserve">
+    <value>↑列ヘッダにセット</value>
+  </data>
+  <data name="ContextMenu_ResetColumnHeader" xml:space="preserve">
+    <value>↑列ヘッダをリセット</value>
+  </data>
   <data name="GroupBox_DisplayFormat" xml:space="preserve">
     <value>表示形式</value>
   </data>
-  <data name="Label_RowHeight" xml:space="preserve">
+  <data name="Label_RowlHeight" xml:space="preserve">
     <value>行の高さ</value>
   </data>
   <data name="Label_ColumnWidth" xml:space="preserve">
@@ -329,18 +341,6 @@
   </data>
   <data name="Word_MatchType" xml:space="preserve">
     <value>マッチタイプ</value>
-  </data>
-  <data name="ContextMenu_ResetColumnHeader" xml:space="preserve">
-    <value>↑列ヘッダをリセット</value>
-  </data>
-  <data name="ContextMenu_ResetRowHeader" xml:space="preserve">
-    <value>←行ヘッダをリセット</value>
-  </data>
-  <data name="ContextMenu_SetColumnHeader" xml:space="preserve">
-    <value>↑列ヘッダにセット</value>
-  </data>
-  <data name="ContextMenu_SetRowHeader" xml:space="preserve">
-    <value>←行ヘッダにセット</value>
   </data>
   <data name="Word_Font" xml:space="preserve">
     <value>フォント</value>
@@ -496,5 +496,20 @@
   </data>
   <data name="ContextMenu_CopyAsTsv" xml:space="preserve">
     <value>TSV形式でコピー</value>
+  </data>
+  <data name="Button_BackFolder" xml:space="preserve">
+    <value>戻る</value>
+  </data>
+  <data name="Word_Chinese" xml:space="preserve">
+    <value>中国語</value>
+  </data>
+  <data name="Button_SelectSrcFolder" xml:space="preserve">
+    <value>ソースフォルダを選択</value>
+  </data>
+  <data name="Button_SelectDstFolder" xml:space="preserve">
+    <value>目標フォルダを選択</value>
+  </data>
+  <data name="Button_ParentFolder" xml:space="preserve">
+    <value>上位のフォルダに戻る</value>
   </data>
 </root>

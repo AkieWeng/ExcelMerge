@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Button_ExtractDiff" xml:space="preserve">
-    <value>只显示差异</value>
+    <value>比较差异</value>
   </data>
   <data name="Label_SkipFirstBlankRows" xml:space="preserve">
     <value>忽略第一个空白行</value>
@@ -497,7 +497,19 @@
   <data name="ContextMenu_CopyAsTsv" xml:space="preserve">
     <value>以TSV格式复制</value>
   </data>
+  <data name="Button_BackFolder" xml:space="preserve">
+    <value>返回</value>
+  </data>
   <data name="Word_Chinese" xml:space="preserve">
     <value>中文</value>
+  </data>
+  <data name="Button_SelectSrcFolder" xml:space="preserve">
+    <value>选择源文件夹</value>
+  </data>
+  <data name="Button_SelectDstFolder" xml:space="preserve">
+    <value>选择目标文件夹</value>
+  </data>
+  <data name="Button_ParentFolder" xml:space="preserve">
+    <value>返回上级文件夹</value>
   </data>
 </root>

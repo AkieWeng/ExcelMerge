@@ -79,6 +79,33 @@ namespace ExcelMerge.GUI.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Back to Parent Folder 的本地化字符串。
+        /// </summary>
+        public static string Button_ParentFolder {
+            get {
+                return ResourceManager.GetString("Button_ParentFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Select Dst Folder 的本地化字符串。
+        /// </summary>
+        public static string Button_SelectDstFolder {
+            get {
+                return ResourceManager.GetString("Button_SelectDstFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Select Src Folder 的本地化字符串。
+        /// </summary>
+        public static string Button_SelectSrcFolder {
+            get {
+                return ResourceManager.GetString("Button_SelectSrcFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Output Log 的本地化字符串。
         /// </summary>
         public static string ContextMenu_BuildCellBaseLog {
@@ -480,15 +507,6 @@ namespace ExcelMerge.GUI.Properties {
         public static string Label_RowHeaderColor {
             get {
                 return ResourceManager.GetString("Label_RowHeaderColor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似  的本地化字符串。
-        /// </summary>
-        public static string Label_RowHeight {
-            get {
-                return ResourceManager.GetString("Label_RowHeight", resourceCulture);
             }
         }
         
@@ -950,6 +968,15 @@ namespace ExcelMerge.GUI.Properties {
         public static string Word_CaseSensitive {
             get {
                 return ResourceManager.GetString("Word_CaseSensitive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Chinese 的本地化字符串。
+        /// </summary>
+        public static string Word_Chinese {
+            get {
+                return ResourceManager.GetString("Word_Chinese", resourceCulture);
             }
         }
         

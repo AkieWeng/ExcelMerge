@@ -104,7 +104,7 @@ namespace ExcelMerge.GUI.Views
             }
         }
 
-        private void SrcFolderUpButton_Click(object sender, RoutedEventArgs e)
+        private void SrcParentFolderButton_Click(object sender, RoutedEventArgs e)
         {
             string folderPath = System.IO.Path.GetDirectoryName(GetViewModel().SrcFolderPath);
             if (folderPath != null)
@@ -125,7 +125,7 @@ namespace ExcelMerge.GUI.Views
             }
         }
 
-        private void DstFolderUpButton_Click(object sender, RoutedEventArgs e)
+        private void DstParentFolderButton_Click(object sender, RoutedEventArgs e)
         {
             string folderPath = System.IO.Path.GetDirectoryName(GetViewModel().DstFolderPath);
             if (folderPath != null)
