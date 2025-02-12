@@ -88,7 +88,7 @@ namespace ExcelMerge.GUI.Views
             var args = new DiffViewEventArgs<FastGridControl>(null, container, TargetType.First);
             DataGridEventDispatcher.Instance.DispatchParentLoadEvent(args);
 
-            ExecuteDiff(isStartup: true);
+            //ExecuteDiff(isStartup: true);
 
             // In order to enable Ctrl + F immediately after startup.
             ToolExpander.IsExpanded = false;
