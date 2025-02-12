@@ -117,6 +117,15 @@ namespace ExcelMerge.GUI.Views
             }
         }
 
+        private void SrcScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            DstScrollViewer.ScrollToVerticalOffset(SrcScrollViewer.VerticalOffset - e.Delta);
+        }
+
+        private void DstScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            SrcScrollViewer.ScrollToVerticalOffset(DstScrollViewer.VerticalOffset - e.Delta);
+        }
 
     }
 }

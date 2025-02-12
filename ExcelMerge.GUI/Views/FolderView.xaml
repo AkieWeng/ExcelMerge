@@ -9,8 +9,17 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <vc:MultiConditionColorConverter x:Key="MultiConditionColorConverter"/>
+        <Style x:Key="AlternatingListBoxItemStyle" TargetType="ListBoxItem">
+            <Style.Triggers>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                    <Setter Property="Background" Value="#FAFAFA"/>
+                </Trigger>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                    <Setter Property="Background" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
-
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -39,8 +48,8 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <ScrollViewer x:Name="SrcScrollViewer" Grid.Column="0" Margin="10" VerticalScrollBarVisibility="Auto" ScrollChanged="SrcScrollViewer_ScrollChanged">
-                <ListBox ItemsSource="{Binding AlignedFiles}"  MouseDoubleClick="ListBox_MouseDoubleClick">
+            <ScrollViewer x:Name="SrcScrollViewer" Grid.Column="0" Margin="10" VerticalScrollBarVisibility="Auto" ScrollChanged="SrcScrollViewer_ScrollChanged" PreviewMouseWheel="SrcScrollViewer_PreviewMouseWheel">
+                <ListBox ItemsSource="{Binding AlignedFiles}"  MouseDoubleClick="ListBox_MouseDoubleClick" AlternationCount="2" ItemContainerStyle="{StaticResource AlternatingListBoxItemStyle}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding SrcFile}">
@@ -56,8 +65,8 @@
                 </ListBox>
             </ScrollViewer>
 
-            <ScrollViewer x:Name="DstScrollViewer" Grid.Column="1" Margin="10" VerticalScrollBarVisibility="Auto" ScrollChanged="DstScrollViewer_ScrollChanged">
-                <ListBox ItemsSource="{Binding AlignedFiles}"  MouseDoubleClick="ListBox_MouseDoubleClick">
+            <ScrollViewer x:Name="DstScrollViewer" Grid.Column="1" Margin="10" VerticalScrollBarVisibility="Auto" ScrollChanged="DstScrollViewer_ScrollChanged" PreviewMouseWheel="DstScrollViewer_PreviewMouseWheel">
+                <ListBox ItemsSource="{Binding AlignedFiles}"  MouseDoubleClick="ListBox_MouseDoubleClick" AlternationCount="2" ItemContainerStyle="{StaticResource AlternatingListBoxItemStyle}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding DstFile}">

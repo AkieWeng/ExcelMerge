@@ -49,14 +49,11 @@ namespace ExcelMerge.GUI.ViewModels
             get => srcFolderPath;
             set
             {
-                if (srcFolderPath != value)
-                {
-                    srcFolderPath = value;
-                    // 加载源文件夹中的 Excel 文件
-                    LoadSrcExcelFiles(srcFolderPath);
-                    AlignFiles();
-                    OnPropertyChanged(nameof(SrcFolderPath));
-                }
+                srcFolderPath = value;
+                // 加载源文件夹中的 Excel 文件
+                LoadSrcExcelFiles(srcFolderPath);
+                AlignFiles();
+                OnPropertyChanged(nameof(SrcFolderPath));
             }
         }
 
@@ -66,14 +63,11 @@ namespace ExcelMerge.GUI.ViewModels
             get => dstFolderPath; 
             set
             {
-                if (dstFolderPath != value)
-                {
-                    dstFolderPath = value;
-                    // 加载目标文件夹中的 Excel 文件
-                    LoadDstExcelFiles(dstFolderPath);
-                    AlignFiles();
-                    OnPropertyChanged(nameof(DstFolderPath));
-                }
+                dstFolderPath = value;
+                // 加载目标文件夹中的 Excel 文件
+                LoadDstExcelFiles(dstFolderPath);
+                AlignFiles();
+                OnPropertyChanged(nameof(DstFolderPath));
             }
         }
 
@@ -84,6 +78,11 @@ namespace ExcelMerge.GUI.ViewModels
                 .Concat(Directory.GetFiles(folderPath, "*.xlsx"))
                 .Concat(Directory.GetFiles(folderPath, "*.csv"))
                 .Concat(Directory.GetFiles(folderPath, "*.tsv"));
+            if (!files.Any())
+            {
+                MessageBox.Show("源文件夹中没有找到相关文件。", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
             foreach (var file in files)
             {
                 SrcExcelFiles.Add(file);
@@ -97,6 +96,11 @@ namespace ExcelMerge.GUI.ViewModels
                 .Concat(Directory.GetFiles(folderPath, "*.xlsx"))
                 .Concat(Directory.GetFiles(folderPath, "*.csv"))
                 .Concat(Directory.GetFiles(folderPath, "*.tsv"));
+            if (!files.Any())
+            {
+                MessageBox.Show("目标文件夹中没有找到相关文件。", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
             foreach (var file in files)
             {
                 DstExcelFiles.Add(file);
