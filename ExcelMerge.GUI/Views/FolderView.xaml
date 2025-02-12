@@ -19,6 +19,8 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <BitmapImage x:Key="FileIcon" UriSource="pack://application:,,,/;component/Resources/file.png"/>
+        <BitmapImage x:Key="FolderIcon" UriSource="pack://application:,,,/;component/Resources/folder.png"/>
     </UserControl.Resources>
 
     <Grid>
@@ -52,14 +54,33 @@
                 <ListBox ItemsSource="{Binding AlignedFiles}"  MouseDoubleClick="ListBox_MouseDoubleClick" AlternationCount="2" ItemContainerStyle="{StaticResource AlternatingListBoxItemStyle}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding SrcFile}">
-                                <TextBlock.Foreground>
-                                    <MultiBinding Converter="{StaticResource MultiConditionColorConverter}">
-                                        <Binding Path="IsMatched" />
-                                        <Binding Path="IsSame" />
-                                    </MultiBinding>
-                                </TextBlock.Foreground>
-                            </TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="16" Height="16">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SrcFile}" Value="{x:Null}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding SrcIsFolder}" Value="True">
+                                                    <Setter Property="Source" Value="{StaticResource FolderIcon}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding SrcIsFolder}" Value="False">
+                                                    <Setter Property="Source" Value="{StaticResource FileIcon}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock Text="{Binding SrcFile}">
+                                    <TextBlock.Foreground>
+                                        <MultiBinding Converter="{StaticResource MultiConditionColorConverter}">
+                                            <Binding Path="IsMatched" />
+                                            <Binding Path="IsSame" />
+                                        </MultiBinding>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                            </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -69,14 +90,33 @@
                 <ListBox ItemsSource="{Binding AlignedFiles}"  MouseDoubleClick="ListBox_MouseDoubleClick" AlternationCount="2" ItemContainerStyle="{StaticResource AlternatingListBoxItemStyle}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding DstFile}">
-                                <TextBlock.Foreground>
-                                    <MultiBinding Converter="{StaticResource MultiConditionColorConverter}">
-                                        <Binding Path="IsMatched" />
-                                        <Binding Path="IsSame" />
-                                    </MultiBinding>
-                                </TextBlock.Foreground>
-                            </TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="16" Height="16">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding DstFile}" Value="{x:Null}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding DstIsFolder}" Value="True">
+                                                    <Setter Property="Source" Value="{StaticResource FolderIcon}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding DstIsFolder}" Value="False">
+                                                    <Setter Property="Source" Value="{StaticResource FileIcon}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock Text="{Binding DstFile}">
+                                    <TextBlock.Foreground>
+                                        <MultiBinding Converter="{StaticResource MultiConditionColorConverter}">
+                                            <Binding Path="IsMatched" />
+                                            <Binding Path="IsSame" />
+                                        </MultiBinding>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                            </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

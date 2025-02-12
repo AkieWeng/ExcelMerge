@@ -34,6 +34,8 @@ namespace ExcelMerge.GUI.ViewModels
             public string DstFile { get; set; }
             public bool IsMatched { get; set; }
             public bool IsSame { get; set; }
+            public bool SrcIsFolder { get; set; }
+            public bool DstIsFolder { get; set; }
         }
 
         private ObservableCollection<AlignedFile> alignedFiles;
@@ -51,7 +53,7 @@ namespace ExcelMerge.GUI.ViewModels
             {
                 srcFolderPath = value;
                 // 加载源文件夹中的 Excel 文件
-                LoadSrcExcelFiles(srcFolderPath);
+                LoadSrcFiles(srcFolderPath);
                 AlignFiles();
                 OnPropertyChanged(nameof(SrcFolderPath));
             }
@@ -60,18 +62,18 @@ namespace ExcelMerge.GUI.ViewModels
         private string dstFolderPath;
         public string DstFolderPath
         {
-            get => dstFolderPath; 
+            get => dstFolderPath;
             set
             {
                 dstFolderPath = value;
                 // 加载目标文件夹中的 Excel 文件
-                LoadDstExcelFiles(dstFolderPath);
+                LoadDstFiles(dstFolderPath);
                 AlignFiles();
                 OnPropertyChanged(nameof(DstFolderPath));
             }
         }
 
-        public void LoadSrcExcelFiles(string folderPath)
+        public void LoadSrcFiles(string folderPath)
         {
             SrcFiles.Clear();
             var files = Directory.GetFiles(folderPath, "*.xls")
@@ -97,7 +99,7 @@ namespace ExcelMerge.GUI.ViewModels
             }
         }
 
-        public void LoadDstExcelFiles(string folderPath)
+        public void LoadDstFiles(string folderPath)
         {
             DstFiles.Clear();
             var files = Directory.GetFiles(folderPath, "*.xls")
@@ -124,8 +126,8 @@ namespace ExcelMerge.GUI.ViewModels
         }
 
         public string ComputeHash(string filePath)
-        {            
-            using(var stream = File.OpenRead(filePath))
+        {
+            using (var stream = File.OpenRead(filePath))
             {
                 using (SHA256 hash = SHA256.Create())
                 {
@@ -147,32 +149,35 @@ namespace ExcelMerge.GUI.ViewModels
             {
                 var srcFile = srcFileNames.Contains(file) ? file : null;
                 var dstFile = dstFileNames.Contains(file) ? file : null;
+                var srcPath = srcFile != null ? System.IO.Path.Combine(SrcFolderPath, srcFile) : null;
+                var dstPath = dstFile != null ? System.IO.Path.Combine(DstFolderPath, dstFile) : null;
+
+                var srcIsFolder = srcPath != null && Directory.Exists(srcPath);
+                var dstIsFolder = dstPath != null && Directory.Exists(dstPath);
+
                 if (srcFile != dstFile)
-                    AlignedFiles.Add(new AlignedFile { SrcFile = srcFile, DstFile = dstFile, IsMatched = false, IsSame = false });
+                    AlignedFiles.Add(new AlignedFile { SrcFile = srcFile, DstFile = dstFile, IsMatched = false, IsSame = false, SrcIsFolder = srcIsFolder, DstIsFolder = dstIsFolder });
                 // 相同文件名
                 else
                 {
-                    var srcPath = System.IO.Path.Combine(SrcFolderPath, file);
-                    var dstPath = System.IO.Path.Combine(DstFolderPath, file);
                     // 都是文件夹
-                    if (Directory.Exists(srcPath) && Directory.Exists(dstPath))
+                    if (srcIsFolder && dstIsFolder)
                     {
-                        AlignedFiles.Add(new AlignedFile { SrcFile = file, DstFile = file, IsMatched = true, IsSame = true });
+                        AlignedFiles.Add(new AlignedFile { SrcFile = file, DstFile = file, IsMatched = true, IsSame = true, SrcIsFolder = true, DstIsFolder = true });
                     }
                     // 一个是文件夹，一个是文件
-                    else if (Directory.Exists(srcPath) || Directory.Exists(dstPath))
+                    else if (srcIsFolder || dstIsFolder)
                     {
-                        AlignedFiles.Add(new AlignedFile { SrcFile = file, DstFile = file, IsMatched = true, IsSame = false });
+                        AlignedFiles.Add(new AlignedFile { SrcFile = file, DstFile = file, IsMatched = true, IsSame = false, SrcIsFolder = srcIsFolder, DstIsFolder = dstIsFolder });
                     }
                     // 都是文件
                     else
                     {
                         var srcHash = ComputeHash(srcPath);
                         var dstHash = ComputeHash(dstPath);
-                        AlignedFiles.Add(new AlignedFile { SrcFile = file, DstFile = file, IsMatched = true, IsSame = srcHash == dstHash });
+                        AlignedFiles.Add(new AlignedFile { SrcFile = file, DstFile = file, IsMatched = true, IsSame = srcHash == dstHash, SrcIsFolder = false, DstIsFolder = false });
                     }
                 }
-
             }
         }
 
