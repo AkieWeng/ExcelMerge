@@ -104,12 +104,32 @@ namespace ExcelMerge.GUI.Views
             }
         }
 
+        private void SrcFolderUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            string folderPath = System.IO.Path.GetDirectoryName(GetViewModel().SrcFolderPath);
+            if (folderPath != null)
+            {
+                // 更新源文件夹路径
+                GetViewModel().SrcFolderPath = folderPath;
+            }
+        }
+
         private void DstFolderButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new System.Windows.Forms.FolderBrowserDialog();
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string folderPath = dialog.SelectedPath;
+                // 更新目标文件夹路径
+                GetViewModel().DstFolderPath = folderPath;
+            }
+        }
+
+        private void DstFolderUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            string folderPath = System.IO.Path.GetDirectoryName(GetViewModel().DstFolderPath);
+            if (folderPath != null)
+            {
                 // 更新目标文件夹路径
                 GetViewModel().DstFolderPath = folderPath;
             }
