@@ -40,39 +40,53 @@ namespace ExcelMerge.GUI.Views
             if (listBox != null && listBox.SelectedItem != null)
             {
                 var selectedItem = listBox.SelectedItem as FolderViewModel.AlignedFile;
-                if (selectedItem != null && selectedItem.IsMatched)
+                if (selectedItem != null)
                 {
-                    string srcFilePath = System.IO.Path.Combine(GetViewModel().SrcFolderPath, selectedItem.SrcFile);
-                    string dstFilePath = System.IO.Path.Combine(GetViewModel().DstFolderPath, selectedItem.DstFile);
-                    var parentWindow = Window.GetWindow(this) as MainWindow;
-                    if (parentWindow != null)
+                    if (selectedItem.SrcIsFolder || selectedItem.DstIsFolder)
                     {
-                        var mainWindowViewModel = parentWindow.DataContext as MainWindowViewModel;
-                        if (mainWindowViewModel != null)
+                        if (selectedItem.SrcIsFolder)
                         {
-                            mainWindowViewModel.SrcPath = GetViewModel().SrcFolderPath;
-                            mainWindowViewModel.DstPath = GetViewModel().DstFolderPath;
-                            DiffView diffView;
-                            if(mainWindowViewModel.DiffView == null)
-                                diffView = new DiffView();
-                            else
-                                diffView = mainWindowViewModel.DiffView;
-                            if (diffView.DataContext == null)
+                            GetViewModel().SrcFolderPath = System.IO.Path.Combine(GetViewModel().SrcFolderPath, selectedItem.SrcFile);
+                        }
+                        if (selectedItem.DstIsFolder)
+                        {
+                            GetViewModel().DstFolderPath = System.IO.Path.Combine(GetViewModel().DstFolderPath, selectedItem.DstFile);
+                        }
+                    }
+                    else if (selectedItem.IsMatched)
+                    {
+                        string srcFilePath = System.IO.Path.Combine(GetViewModel().SrcFolderPath, selectedItem.SrcFile);
+                        string dstFilePath = System.IO.Path.Combine(GetViewModel().DstFolderPath, selectedItem.DstFile);
+                        var parentWindow = Window.GetWindow(this) as MainWindow;
+                        if (parentWindow != null)
+                        {
+                            var mainWindowViewModel = parentWindow.DataContext as MainWindowViewModel;
+                            if (mainWindowViewModel != null)
                             {
-                                var diffViewModel = new DiffViewModel(srcFilePath, dstFilePath);
-                                diffView.DataContext = diffViewModel;
-                            }
-                            else
-                            {
-                                var diffViewModel = diffView.DataContext as DiffViewModel;
-                                if (diffViewModel != null)
+                                mainWindowViewModel.SrcPath = GetViewModel().SrcFolderPath;
+                                mainWindowViewModel.DstPath = GetViewModel().DstFolderPath;
+                                DiffView diffView;
+                                if (mainWindowViewModel.DiffView == null)
+                                    diffView = new DiffView();
+                                else
+                                    diffView = mainWindowViewModel.DiffView;
+                                if (diffView.DataContext == null)
                                 {
-                                    diffViewModel.SrcPath = srcFilePath;
-                                    diffViewModel.DstPath = dstFilePath;
+                                    var diffViewModel = new DiffViewModel(srcFilePath, dstFilePath);
+                                    diffView.DataContext = diffViewModel;
                                 }
+                                else
+                                {
+                                    var diffViewModel = diffView.DataContext as DiffViewModel;
+                                    if (diffViewModel != null)
+                                    {
+                                        diffViewModel.SrcPath = srcFilePath;
+                                        diffViewModel.DstPath = dstFilePath;
+                                    }
+                                }
+                                mainWindowViewModel.DiffView = diffView;
+                                mainWindowViewModel.Content = diffView;
                             }
-                            mainWindowViewModel.DiffView = diffView;
-                            mainWindowViewModel.Content = diffView;
                         }
                     }
                 }
