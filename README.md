@@ -1,165 +1,36 @@
-- [English](https://github.com/skanmera/ExcelMerge/blob/master/README.md)
-- [日本語](https://github.com/skanmera/ExcelMerge/blob/master/README.jp.md)
-
-
 ![](https://github.com/skanmera/ExcelMerge/blob/media/media/logo.png)
+### 图形化的Excel差异对比工具
 
-### GUI Diff Tool for Excel
+## 概述
+ExcelMerge是用于Excel或CSV差异对比的图形化工具。当前功能仅限于图形化的文件夹与Excel差异显示。
 
-![Demo](https://github.com/skanmera/ExcelMerge/blob/media/media/demo.gif)
+## 原项目信息
+- **原项目名称**：ExcelMerge
+- **原项目链接**：https://github.com/skanmera/ExcelMerge
 
-![](https://github.com/skanmera/ExcelMerge/blob/media/media/cell_diff.png)
+## 主要修改内容
+- 新增文件夹对比功能。支持按钮、文本框、拖动三种方式选择文件夹。
+- 完善中文适配。
 
-## Description
-
-ExcelMerge is a graphical display tool for Excel or CSV Diff.
-The current feature is limited only to the display of Diff, but the goal is to implement the merge feature.
-It can also be used as a diff tool for Git or Mercurial.
-
-## System Requirements
-
-- Windows 7 or later
-
-## Supported file types
-
+## 支持的文件类型
 - .xls
 - .xlsx
+- .xlsm
 - .csv
 - .tsv
 
-## Installation
+## 安装
+从[这里](https://github.com/AkieWeng/ExcelMerge/releases/)下载ExcelMerge.Setup.msi并运行。
 
-Download ExcelMergeSetup.msi from [here](https://github.com/skanmera/ExcelMerge/releases/) and Run.
+## 版权声明与许可说明
+本项目基于原项目进行修改和开发，原项目遵循 MIT 许可证。以下是详细的版权和许可信息：
+### 原项目版权信息
+版权所有 (c) 2017 skanmera
+### 本项目新增及修改部分版权信息
+本项目中由 AkieWeng 修改和新增的部分，版权归 AkieWeng 所有。
+### MIT 许可声明
+特此免费授予获得本软件和相关文档文件（“软件”）副本的任何人不受限制地处理本软件的权限，包括但不限于使用、复制、修改、合并、发布、分发、再许可和 / 或出售本软件副本的权利，并允许获得本软件的人这样做。 须符合以下条件：
 
-## Usage
+上述原项目版权声明、本项目新增及修改部分版权声明以及本许可声明应包含在本软件的所有副本或大部分内容中。
 
-### From shortcut
-
-![](https://github.com/skanmera/ExcelMerge/blob/media/media/shortcut.png)
-
-### From exproler context menu
-
-![](https://github.com/skanmera/ExcelMerge/blob/media/media/context.png)
-
-### From command line
-
-```
-ExcelMerge.GUI diff [Options]
-```
-
-|Option|Description|Type|Default|
-|------|-----------|----|-------|
-|```-s``` ```--src-path```|Source file path.|string|
-|```-d``` ```--dst-path``` |Dest file path.| string
-|```-c``` ```--external-cmd```|It is used to activate other tools for unsupported file types and occured any exception.| string
-|```-i``` ```--immediately-execute-external-cmd```|Execute external cmd without error dialog.| bool | false
-|```-w``` ```--wait-external-cmd```|Wait for the external process to finish.|bool|false
-|```-v``` ```--validate-extension```|Validate extension before open file.|bool|false
-|```-e``` ```--empty-file-name```|Empty file name.|string
-|```-k``` ```--keep-file-history```|Don't add recent files.|bool|false
-
-### From Git diff tool
-
-.gitconfig
-```
-[diff]
-tool = ExcelMerge
-
-[difftool "ExcelMerge"]
-cmd = \"C:/Program Files (x86)/ExcelMerge/ExcelMerge.GUI.exe\" diff -s \"$LOCAL\" -d \"$REMOTE\" -c WinMerge -i -w -v -k 
-
-[alias]
-windiff = difftool -g -y -t ExcelMerge
-```
-
-### From Mercurial diff tool
-
-mercurial.ini
-```
-[merge-tools]
-excelmerge.executable = C:\Program Files (x86)\ExcelMerge\ExcelMerge.GUI.exe
-excelmerge.diffargs = diff -s $parent1 -d $child -c WinMerge -i -w -v -e empty -k
-
-[tortoisehg]
-vdiff = excelmerge
-```
-
-## Register External Command
-Register the external command specified by the command line argument --external-cmd.
-
-![](https://github.com/skanmera/ExcelMerge/blob/media/media/ext_cmd_win.png)
-
-### Available Variables
-|Value|Description|
-|------|----------|
-|```${SRC}```|Source file path|
-|```${DST}```|Dest file path|  
-  
-  
-Can also be executed from within the tool.
-
-![](https://github.com/skanmera/ExcelMerge/blob/media/media/ext_cmd.png)
-
-## File Settings
-
-For each file you can specify a line header or a column header.
-
-![](https://github.com/skanmera/ExcelMerge/blob/media/media/file_settings.png)
-
-## Color Settings
-
-You can customize background colors.
-
-![](https://github.com/skanmera/ExcelMerge/blob/media/media/settings.png)
-
-
-## Shortcut Keys
-
-|Shortcut Key|Description|
-|---|-----------|
-|Ctrl + →|Next modified cell|
-|Ctrl + ←|Previous modified cell|
-|Ctrl + ↓|Next modified row|
-|Ctrl + ↑|Previous modified row|
-|Ctrl + K|Next added row|
-|Ctrl + I|Previous added row|
-|Ctrl + L|Next removed row|
-|Ctrl + O|Previous removed row|
-|Ctrl + F|Search cell|
-|F9|Next match cell|
-|F8|Previous match cell|
-|Ctrl + C|Copy selected cells as TSV|
-|Ctrl + Shift + C|Copy selected cells as CSV|
-|Ctrl + D|Show(Hide) console|
-|Ctrl + B|Output selected cells diff as log|
-
-
-## Output diff as log
-
-By selecting Ctrl + D or "Output log" from the context menu, you can output the change as a log.
-The format can be changed from "differential extraction setting".
-
-![](https://github.com/skanmera/ExcelMerge/blob/media/media/log.png)
-
-
-## Known problems
-
-- <h4>If there are column deletions or additions, they may not be displayed at the expected position.</h4>
-If the currently displayed header is not what you expect, you may resolve it by specifying the appropriate header and extract diff.
-Follow these steps.
-1. Select appropriate header cell.
-2. Right click to display the context menu.
-3. Select "Extract diff with this row as header"
-
-
-## LICENSE
-
-#### MIT Licence
-
-Copyright (c)2017 skanmera
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+本软件按 “原样” 提供，不作任何明示或暗示的保证，包括但不限于对适销性、特定用途适用性和非侵权性的保证。在任何情况下，原作者、原版权所有者以及本项目修改者均不对因软件或软件的使用或其他交易而引起或与之相关的任何索赔、损害或其他责任负责，无论是在合同、侵权行为或其他诉讼中。
