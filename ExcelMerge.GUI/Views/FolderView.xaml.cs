@@ -135,6 +135,40 @@ namespace ExcelMerge.GUI.Views
             }
         }
 
+        private void SrcListBox_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (files != null && files.Length > 0)
+                {
+                    string folderPath = files[0];
+                    if (Directory.Exists(folderPath))
+                    {
+                        // 更新SrcFolderPath
+                        GetViewModel().SrcFolderPath = folderPath;
+                    }
+                }
+            }
+        }
+
+        private void DstListBox_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (files != null && files.Length > 0)
+                {
+                    string folderPath = files[0];
+                    if (Directory.Exists(folderPath))
+                    {
+                        // 更新DstFolderPath
+                        GetViewModel().DstFolderPath = folderPath;
+                    }
+                }
+            }
+        }
+
         private void SrcScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             if (e.VerticalChange != 0)

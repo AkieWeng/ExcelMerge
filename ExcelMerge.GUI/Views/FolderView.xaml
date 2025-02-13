@@ -54,7 +54,7 @@
             </Grid.ColumnDefinitions>
 
             <ScrollViewer x:Name="SrcScrollViewer" Grid.Column="0" Margin="10" VerticalScrollBarVisibility="Auto" ScrollChanged="SrcScrollViewer_ScrollChanged" PreviewMouseWheel="SrcScrollViewer_PreviewMouseWheel">
-                <ListBox ItemsSource="{Binding AlignedFiles}"  MouseDoubleClick="ListBox_MouseDoubleClick" AlternationCount="2" ItemContainerStyle="{StaticResource AlternatingListBoxItemStyle}">
+                <ListBox ItemsSource="{Binding AlignedFiles}"  MouseDoubleClick="ListBox_MouseDoubleClick" AlternationCount="2" ItemContainerStyle="{StaticResource AlternatingListBoxItemStyle}" AllowDrop="True" Drop="SrcListBox_Drop">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -90,7 +90,7 @@
             </ScrollViewer>
 
             <ScrollViewer x:Name="DstScrollViewer" Grid.Column="1" Margin="10" VerticalScrollBarVisibility="Auto" ScrollChanged="DstScrollViewer_ScrollChanged" PreviewMouseWheel="DstScrollViewer_PreviewMouseWheel">
-                <ListBox ItemsSource="{Binding AlignedFiles}"  MouseDoubleClick="ListBox_MouseDoubleClick" AlternationCount="2" ItemContainerStyle="{StaticResource AlternatingListBoxItemStyle}">
+                <ListBox ItemsSource="{Binding AlignedFiles}"  MouseDoubleClick="ListBox_MouseDoubleClick" AlternationCount="2" ItemContainerStyle="{StaticResource AlternatingListBoxItemStyle}" AllowDrop="True" Drop="DstListBox_Drop">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
