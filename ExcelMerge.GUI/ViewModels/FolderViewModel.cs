@@ -78,6 +78,7 @@ namespace ExcelMerge.GUI.ViewModels
             SrcFiles.Clear();
             var files = Directory.GetFiles(folderPath, "*.xls")
                 .Concat(Directory.GetFiles(folderPath, "*.xlsx"))
+                .Concat(Directory.GetFiles(folderPath, "*.xlsm"))
                 .Concat(Directory.GetFiles(folderPath, "*.csv"))
                 .Concat(Directory.GetFiles(folderPath, "*.tsv"));
             var directories = Directory.GetDirectories(folderPath);
@@ -104,6 +105,7 @@ namespace ExcelMerge.GUI.ViewModels
             DstFiles.Clear();
             var files = Directory.GetFiles(folderPath, "*.xls")
                 .Concat(Directory.GetFiles(folderPath, "*.xlsx"))
+                .Concat(Directory.GetFiles(folderPath, "*.xlsm"))
                 .Concat(Directory.GetFiles(folderPath, "*.csv"))
                 .Concat(Directory.GetFiles(folderPath, "*.tsv"));
             var directories = Directory.GetDirectories(folderPath);
