@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelMerge", "ExcelMerge\ExcelMerge.csproj", "{BFF4C33C-7395-4428-8587-AA22062E4A24}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetDiff", "NetDiff\NetDiff\NetDiff.csproj", "{00A6267D-DDE3-42CC-9C99-9166C334053E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetDiff.Test", "NetDiff\NetDiff.Test\NetDiff.Test.csproj", "{AAFA1775-1F46-4AA5-97D3-DE88D591828D}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ExcelMerge.Setup", "ExcelMerge.Setup\ExcelMerge.Setup.vdproj", "{A48935DD-C1FD-4357-9047-F094890E36B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,8 @@ Global
 		{AAFA1775-1F46-4AA5-97D3-DE88D591828D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAFA1775-1F46-4AA5-97D3-DE88D591828D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAFA1775-1F46-4AA5-97D3-DE88D591828D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A48935DD-C1FD-4357-9047-F094890E36B8}.Debug|Any CPU.ActiveCfg = Debug
+		{A48935DD-C1FD-4357-9047-F094890E36B8}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
