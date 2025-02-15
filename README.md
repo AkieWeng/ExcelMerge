@@ -20,7 +20,7 @@ ExcelMerge+是用于Excel或CSV差异对比的图形化工具。当前功能仅�
 - .tsv
 
 ## 安装
-从[这里](https://github.com/AkieWeng/ExcelMerge+/releases/)下载ExcelMerge.Setup.msi并运行。
+从[这里](https://github.com/AkieWeng/ExcelMergePlus/releases)下载ExcelMerge.Setup.msi并运行。
 
 ## 版权声明与许可说明
 本项目基于原项目进行修改和开发，原项目遵循 MIT 许可证。以下是详细的版权和许可信息：
